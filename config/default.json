@@ -1,0 +1,7 @@
+
+{
+  "provider": "http://localhost:22000",
+  "privateFor": [ "ROAZBWtSacxXQrOe3FGAqJDyJjFePR5ce4TSIzmJ0Bc="],
+  "txPerBlock": 80,
+  "maxTx": 800
+}

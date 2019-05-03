@@ -1,0 +1,20 @@
+{
+  "name": "quorum-rpc-issue",
+  "version": "1.0.0",
+  "description": "TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.",
+  "main": "src/simple-storage-tests.js",
+  "scripts": {
+    "start": "node src/simple-storage-tests.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@ssh.dev.azure.com:v3/llfoundation/LUX/quorum-rpc-issue"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.0.1",
+    "web3": "1.0.0-beta.37"
+  }
+}

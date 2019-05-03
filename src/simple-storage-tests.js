@@ -1,7 +1,6 @@
 const Web3 = require('web3')
 const config = require('config')
 
-
 const counter = {
   'totalLoop': 0,
   'totalTx': 0,
@@ -25,8 +24,12 @@ class SimpleTest {
     return web3.eth.net.isListening()
   }
 
-  async getAccount () {
+  async getAccounts () {
     return web3.eth.getAccounts()
+  }
+
+  async getTxPool () {
+    // const txPool = new TxPool(Web3.givenProvider || 'ws://some.local-or-remote.node:8546', null, options);
   }
 
   deploy () {
@@ -53,7 +56,7 @@ class SimpleTest {
   loop (contractAddress) {
     console.log('Start loop on contract:', contractAddress)
     const simplestorageContract = new web3.eth.Contract(contract.abi, contractAddress)
-    setTimeout(() => {
+    setTimeout(async () => {
       let i
 
       if (config.maxTx != 0 && counter.totalTx <= config.maxTx)
@@ -75,6 +78,8 @@ class SimpleTest {
       counter.totalLoop += 1
       console.log(i, 'tx just sent')
       console.log('Total loop:', counter.totalLoop, 'Total tx sent:', counter.totalTx, ', total tx success:', counter.totalSuccess, ', total tx error:', counter.totalError)
+      const txPool = await this.getTxPool()
+      // console.log('Tx pool pending:', txPool.pending, ', queued:', txPool.queued)
       console.log('---------------------------------------------')
       this.loop(contractAddress)
     }, 5000)
@@ -85,11 +90,13 @@ class SimpleTest {
       console.log('Start script')
       await this.testConnection()
       console.log('Connected to node:', config.provider)
-      const accounts = await this.getAccount()
+      const accounts = await this.getAccounts()
       account.address = accounts[0]
       console.log('Account address is:', account.address)
+      console.log('Wait a few seconds for contract deployment...')
       const contractAddress = await this.deploy()
       console.log('Contract address is:', contractAddress)
+      console.log('Wait a few seconds for loop to start...')
       this.loop(contractAddress)
     } catch (err) {
       console.error('Start failure', err)
